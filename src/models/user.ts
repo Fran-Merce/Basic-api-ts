@@ -1,6 +1,7 @@
 import { Schema, model, Model, Types, version } from 'mongoose';
 
 import { User } from '../interfaces/user.interface';
+import { ItemModel } from './item';
 
 const UserSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
@@ -12,6 +13,7 @@ const UserSchema = new Schema<User>({
     dafaault: 'Make your description 😢',
   },
   age: { type: Number, required: false,  },
+  tasks: [{ type: ItemModel.schema, required: false ,ref:'tasks'}],
 });
 
 export const UserModel = model('users', UserSchema);

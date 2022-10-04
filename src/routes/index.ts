@@ -11,4 +11,5 @@ readdirSync(PATH_ROUTER).filter(fileName => {
   import(`./${cleanName}`).then(moduleRoute =>
     router.use(`/${cleanName}`, moduleRoute.router)
   );
+  
 });
