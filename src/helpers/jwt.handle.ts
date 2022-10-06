@@ -9,8 +9,6 @@ const GenerateToken = async (id: string) => {
 };
 
 const verifyToken = (jwt: string) => {
-  console.log(verify(jwt, JWT_SECRET), 'que pija retorna esto');
-
   return verify(jwt, JWT_SECRET);
 };
 

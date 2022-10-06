@@ -10,7 +10,9 @@ export const checkSession = async (
   next: NextFunction
 ) => {
   try {
-    const jwtByUser = req.headers.authorization || '';
+    if (!req.headers.authorization)
+      return res.status(401).json({ message: 'No token provided' });
+    const jwtByUser = req.headers.authorization as string;
     const jwt = jwtByUser.split(' ').pop();
     const isUser = verifyToken(`${jwt}`);
     if (typeof isUser === 'string') return res.send({ error: 'NOT_FOUND_USER' });
