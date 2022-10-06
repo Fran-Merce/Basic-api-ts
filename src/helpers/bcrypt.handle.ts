@@ -6,7 +6,9 @@ interface passwords {
 // gfuncion return string
 const encrypt = async (password: string) => await hash(password, 10);
 
-const verified = async ({ password, passwordHash }: passwords) =>
-  await compare(password, passwordHash);
+const verified = async ({ password, passwordHash }: passwords) => {
+  console.log(password, passwordHash);
+  return await compare(password, passwordHash);
+};
 
 export { encrypt, verified };
