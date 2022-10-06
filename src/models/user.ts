@@ -1,7 +1,7 @@
-import { Schema, model, Model, Types, version } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 import { User } from '../interfaces/user.interface';
-import { ItemModel } from './item';
+import { ItemModel } from './task';
 
 const UserSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
@@ -10,10 +10,10 @@ const UserSchema = new Schema<User>({
   description: {
     type: String,
     required: false,
-    dafaault: 'Make your description 😢',
+    dafaault: 'Make your description  😢',
   },
-  age: { type: Number, required: false,  },
-  tasks: [{ type: ItemModel.schema, required: false ,ref:'tasks'}],
+  age: { type: Number, required: false },
+  tasks: [{ type: ItemModel.schema, required: false, ref: 'tasks' }],
 });
 
 export const UserModel = model('users', UserSchema);

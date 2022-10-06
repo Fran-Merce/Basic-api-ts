@@ -7,7 +7,7 @@ import {
   getTodos,
   insertTodo,
   updateTodo,
-} from '../services/item.service';
+} from '../services/task.service';
 
 const getItem = async (req: RequestWithUser, res: Response) => {
   try {
@@ -19,10 +19,13 @@ const getItem = async (req: RequestWithUser, res: Response) => {
     handleHttp(res, 'Error on get item');
   }
 };
-const updateItenm = async ({ params, body, headers }: RequestWithUser, res: Response) => {
+const updateItenm = async (
+  { params, body, headers }: RequestWithUser,
+  res: Response
+) => {
   try {
     const { id } = params;
-    if(!headers.user) return res.send({error: 'NOT_FOUND_USER'})
+    if (!headers.user) return res.send({ error: 'NOT_FOUND_USER' });
     res.send(await updateTodo(id, body, `${headers.user}`));
   } catch (error) {
     handleHttp(res, 'Error on UPDATE item');
@@ -38,23 +41,23 @@ const postItem = async ({ body, headers }: RequestWithUser, res: Response) => {
     handleHttp(res, `error on post item ${error}`);
   }
 };
-const deleteItem = async ({ params,headers }: RequestWithUser, res: Response) => {
-  if(!headers.user) return res.send({error: 'NOT_FOUND_USER'})
+const deleteItem = async ({ params, headers }: RequestWithUser, res: Response) => {
+  if (!headers.user) return res.send({ error: 'NOT_FOUND_USER' });
   try {
     const { id } = params;
-    const response = await deleteTodo(id,`${headers.user}`);
+    const response = await deleteTodo(id, `${headers.user}`);
     if (!response) return res.send({ ERROR: 'NOT_FOUND' });
-    res.send({ message: 'Item deleted',data: response });
+    res.send({ message: 'Item deleted', data: response });
   } catch (error) {
     handleHttp(res, 'Error on delete item');
   }
 };
 
-const getItems = async ({ headers }: RequestWithUser, res: Response) => {
-  if(!headers.user) return res.send({error: 'NOT_FOUND_USER'})
+const getItems = async (req: RequestWithUser, res: Response) => {
+  if (!req.headers.user) return res.send({ error: 'NOT_FOUND_USER' });
   try {
-    const responseTodo = await getTodos(`${headers.user}`);
-    if(!responseTodo) return res.send({error: 'NOT_FOUND_USER_OR_ITEMS'});
+    const responseTodo = await getTodos(`${req.headers.user}`);
+    if (!responseTodo) return res.send({ error: 'NOT_FOUND_USER_OR_ITEMS' });
     res.send(responseTodo);
   } catch (error) {
     handleHttp(res, 'NOT_FOUND_USER_OR_ITEMS');

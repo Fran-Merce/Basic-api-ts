@@ -1,9 +1,9 @@
 import { Item } from '../interfaces/item.interface';
-import { ItemModel } from '../models/item';
+import { ItemModel } from '../models/task';
 import { UserModel } from '../models/user';
 // Todo handle resposnes with status codes and messages
 
-const getUser = async (id: string) => {
+export const getUser = async (id: any) => {
   const user = await UserModel.findById(id);
   if (!user) return null;
   return user;
@@ -22,7 +22,6 @@ export const insertTodo = async (item: Item, userId: string) => {
   if (isOnDb) return false;
   tasks.push(newItem);
   await user.save();
-
   return true;
 };
 
@@ -42,7 +41,7 @@ export const getTodo = async (id: string, idUser: string) => {
   return task;
 };
 
-export const updateTodo = async (id: string, item: Item, userId:string) => {
+export const updateTodo = async (id: string, item: Item, userId: string) => {
   console.log(userId, 'userId');
   const user = await getUser(userId);
   if (!user) return null;
